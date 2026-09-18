@@ -11,3 +11,12 @@ class Player:
         self.reputation = 0
         self.inventory = []
         self.artifacts = []
+
+class Enemy:
+    def __init__(self, name, health, damage, defense, xp, gold):
+        self.name = name
+        self.health = health
+        self.damage = damage
+        self.defense = defense
+        self.xp = xp
+        self.gold = gold
