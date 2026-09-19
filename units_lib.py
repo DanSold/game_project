@@ -11,6 +11,8 @@ class Player:
         self.reputation = 0
         self.inventory = []
         self.artifacts = []
+        self.quests = []
+        self.completed_quests = []
 
 class Enemy:
     def __init__(self, name, health, damage, defense, xp, gold):
@@ -20,3 +22,5 @@ class Enemy:
         self.defense = defense
         self.xp = xp
         self.gold = gold
+
+bandit = Enemy( "Bandit", 70, 18, 2, 25, 20 )
