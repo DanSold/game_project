@@ -1,6 +1,10 @@
 from random import randint
 from units_lib import *
 
+from framefunc import pause
+
+import time
+
 
 def battle(enemy: Enemy, player: Player):
     print("=" * 45)
@@ -138,7 +142,7 @@ def blacksmith(player: Player):
                 print("Inventory: Empty")
         if player.equipped_weapon:
             print(
-                f"Weapon: {player.equipped_weapon.name} (Lvl {player.equipped_weapon.level}) "
+                f"Weapon: {player.equipped_weapon.name} (Lvl {player.equipped_weapon.level})|"
                 f"(+{player.equipped_weapon.damage_bonus} Damage)|(Upgrade coef:{player.equipped_weapon.coef_up})")
         else:
             print("Weapon: None")
@@ -348,6 +352,9 @@ def open_shop(player: Player):
                     elif item.item_type == "potion":
                         sell_price = item.cost
                         print(f"{idx}. {item.name} (+{item.health_up} HP) — Sell for {sell_price} Gold")
+                    elif item.item_type == "quest item":
+                        sell_price = item.cost
+                        print(f"{idx}. {item.name} — Sell for {sell_price} Gold (-{item.reputation} Reputation)")
                     else:
                         sell_price = item.cost
                         print(f"{idx}. {item.name} — Sell for {sell_price} Gold")
@@ -368,6 +375,15 @@ def open_shop(player: Player):
                             print(
                                 f"\nYou sold {sold_item.name} (Lvl {sold_item.level}) for {sell_price} gold!"
                             )
+                        elif sold_item.item_type == "quest item":
+
+                            sell_price = sold_item.cost
+                            player.gold += sell_price
+                            player.reputation -= sold_item.reputation
+                            print(
+                                f"\nYou sold {sold_item.name} for {sell_price} gold!"
+                            )
+                            print(f"\nYour reputation {player.reputation} Reputation")
                         else:
                             sell_price = sold_item.cost
                             player.gold += sell_price
@@ -445,8 +461,8 @@ def chek_inventory(player: Player):
         print("-" * 45)
         for idx, item in enumerate(player.inventory, start=1):
             if item.item_type == "weapon":
-                print( f"{idx}. Weapon: {item.name} (LVL {item.level}) "
-                f"(+{item.damage_bonus} Damage)|(Damage coef:{item.coef_up})")
+                print(f"{idx}. Weapon: {item.name} (LVL {item.level}) "
+                      f"(+{item.damage_bonus} Damage)|(Damage coef:{item.coef_up})")
             elif item.item_type == "armor":
                 print(
                     f"{idx}. Armor: {item.name} (LVL {item.level}) "
@@ -464,7 +480,6 @@ def chek_inventory(player: Player):
         print(f"Quests items: {', '.join(player.quests_items)}")
     else:
         print("Quests items: Empty")
-
 
     has_potions = any(item.item_type == "potion" for item in player.inventory)
     if has_potions:
@@ -502,8 +517,6 @@ def chek_quests(player: Player):
     else:
         print(" - No completed quests")
 
-
-
     print("=" * 45)
     pause()
 
@@ -537,7 +550,6 @@ def equip_item(player: Player, item):
             player.damage -= player.equipped_weapon.damage_bonus
             player.inventory.append(player.equipped_weapon)
 
-        # Вдягаємо нову зброю та додаємо її бонус
         player.equipped_weapon = item
         player.damage += item.damage_bonus
         player.inventory.remove(item)
@@ -586,5 +598,16 @@ def upgrade_gear(player: Player, gear):
     gear.upgrade_cost = int(gear.upgrade_cost * 1.5)
 
 
-def pause():
-    input("Press ENTER to continue...")
+def fishing(player: Player, quest_param: bool):
+    print("***You are fishing***")
+    for i in range(10):
+        print("*")
+        time.sleep(1)
+    if quest_param:
+        print("***You caught a Goldfish***")
+        time.sleep(4)
+        print("***You have received the Orb of Wishes***")
+        player.quests_items.append("Orb of Wishes")
+    else:
+        print("You caught a fish")
+        player.inventory.append(fish)

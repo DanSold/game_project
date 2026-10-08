@@ -7,11 +7,11 @@ class Player:
         self.defense = 5
         self.level = 1
         self.xp = 0
-        self.gold = 0
+        self.gold = 1
         self.reputation = 0
         self.inventory = []         # inventory = [small_potion, leather_armor, ...] -> list(Item)
-        self.equipped_weapon = []   # equipped_weapon = [steel_sword] -> only one item in list class Item(Weapon)
-        self.equipped_armor = []    # equipped_armor = [steel_armor] -> only one item in list class Item(Armor)
+        self.equipped_weapon = None   # equipped_weapon = steel_sword -> class Item(Weapon)
+        self.equipped_armor = None    # equipped_armor = steel_armor -> class Item(Armor)
         self.artifacts = []         # artifacts = ["All-seeing Eye", "Eternal Fire", ...] -> list(str)
         self.quests = []            # quests = ["Old Stories", ...] -> list(str)
         self.completed_quests = []  # completed_quests = ["Gold, gold, gold...", ...] -> list(str)
@@ -58,6 +58,10 @@ class Armor(Item):
         self.upgrade_cost = round(cost // 2)
         self.coef_up = coef_up
 
+class QuestItem(Item):
+    def __init__(self, name: str, cost: int, reputation: int):
+        super().__init__(name, cost, item_type="quest item")
+        self.reputation = reputation
 
 small_potion = Potion("Small Potion", 10, 5)
 mid_potion = Potion("Medium Potion", 25, 12)
@@ -70,13 +74,15 @@ leather_armor = Armor("Leather Armor", defense_bonus=2, cost=30, level=1, coef_u
 ring_mail = Armor("Ring-mail Armor", defense_bonus=3, cost=35, level=1, coef_up=1.5)
 steel_armor = Armor("Steel Armor", defense_bonus=4, cost=45, level=1, coef_up=1.4)
 
-trash = Item("Trash", 2, "trash")
+rod = Item(name="Rod", cost=10, item_type="instrument")
+fish = Item(name="Fish", cost=7, item_type="fish")
 poison = Item("Poison", 1, "poison")
-goods = Item("Goods", 30, "goods")
+goods = QuestItem("Goods", 30, 15)
 
 shop_inventory = [small_potion, mid_potion, large_potion, copper_sword, steel_sword, leather_armor, ring_mail,
-                  steel_armor, poison]
+                  steel_armor, poison, rod]
 
-bandit = Enemy("Bandit", 70, 15, 2, 20, 15)
+bandit = Enemy("Bandit", 60, 15, 2, 20, 15)
 group_bandits = Enemy("Group of Bandits", 110, 20, 1, 60, 45)
-knight = Enemy("Knight", 100, 18, 3, 40, 30)
+knight = Enemy("Knight", 100, 18, 4, 40, 30)
+werewolf = Enemy("Werewolf", 110, 25, 3, 45, 35)
