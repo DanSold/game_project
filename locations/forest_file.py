@@ -13,6 +13,7 @@ def forest(player: Player):
 
             print("+ Eye of Truth")
             print("The shaman gave you the Eye of Truth.")
+            time.sleep(3)
 
             mission_complete(player, "One Wish")
 
@@ -23,7 +24,9 @@ def forest(player: Player):
             player.artifacts.append("Eye of Truth")
 
         print("+ Eye of Truth")
+        time.sleep(3)
         mission_complete(player, "One Wish")
+        time.sleep(3)
 
         player.reputation -= 10
         print(
@@ -44,7 +47,7 @@ def forest(player: Player):
 
         choice = input(
             "Do you want to pick it up? (yes/no): "
-        ).strip().lower()
+        ).lower()
 
         if choice == "yes":
             steal_eye_of_truth()

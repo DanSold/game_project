@@ -1,4 +1,4 @@
-from random import randint
+from random import randint, random
 from units_lib import *
 
 from framefunc import pause
@@ -6,12 +6,12 @@ from framefunc import pause
 import time
 
 
+
 def battle(enemy: Enemy, player: Player):
     print("=" * 45)
     print(f"A BATTLE HAS STARTED: {enemy.name}")
     print("=" * 45)
 
-    defending = False
     enemy_hp = enemy.health
 
     while enemy_hp > 0 and player.health > 0:
@@ -19,25 +19,70 @@ def battle(enemy: Enemy, player: Player):
         print(f"{player.name} HP: {player.health}/{player.max_health}")
 
         print("1. Attack")
-        print("2. Defend")
+        print("2. Defend (Parry)")
         print("3. Heal")
 
-        choice = input("Choose action: ")
+        choice = input("Choose action: ").strip()
 
-        # Player attack
         if choice == "1":
-            damage = randint(max(1, player.damage - 5), player.damage + 5)
+            # Player attacks
+            damage = randint(
+                max(1, player.damage - 5),
+                player.damage + 5
+            )
             damage = max(1, damage - enemy.defense)
             enemy_hp -= damage
-            print(f"You dealt {damage} damage!")
-            defending = False
 
-        # Player Defend
+            print(f"\nYou dealt {damage} damage!")
+
         elif choice == "2":
-            print("You prepare to defend.")
-            defending = True
+            # Player attempts to parry
+            if random() < 0.6:
+                print("\n" + "*" * 40)
+                print("*** PARRY SUCCESSFUL! ***")
 
-        # Player Heal
+                # Counterattack
+                counter_damage = randint(
+                    max(1, player.damage - 5),
+                    player.damage + 5
+                )
+                counter_damage = max(
+                    1, counter_damage - enemy.defense
+                )
+
+                enemy_hp -= counter_damage
+
+                print(
+                    f"You blocked the attack and "
+                    f"countered for {counter_damage} damage!"
+                )
+                print("*" * 40)
+
+                # Enemy's turn ends without dealing damage
+                continue
+
+            else:
+                print("\nParry failed!")
+
+                # Failed parry: enemy deals double damage
+                enemy_damage = randint(
+                    max(1, enemy.damage - 5),
+                    enemy.damage + 5
+                )
+                enemy_damage *= 2
+
+                enemy_damage = max(
+                    1, enemy_damage - player.defense
+                )
+                player.health -= enemy_damage
+
+                print(
+                    f"{enemy.name} dealt "
+                    f"{enemy_damage} damage!"
+                )
+
+                continue
+
         elif choice == "3":
             healing(player)
             continue
@@ -46,31 +91,37 @@ def battle(enemy: Enemy, player: Player):
             print("Invalid choice. Please pick 1, 2, or 3.")
             continue
 
-        # Enemy attack
+
         if enemy_hp > 0:
-            enemy_damage = randint(max(1, enemy.damage - 5), enemy.damage + 5)
-            enemy_damage -= player.defense
+            enemy_damage = randint(
+                max(1, enemy.damage - 5),
+                enemy.damage + 5
+            )
+            enemy_damage = max(
+                1, enemy_damage - player.defense
+            )
 
-            if defending:  # The protection parameter takes the value "True" when the player selects "2. Defend"
-                enemy_damage //= 2
-                print("\nYour defense reduced the damage!")
-
-            enemy_damage = max(1, enemy_damage)
             player.health -= enemy_damage
-            print(f"{enemy.name} dealt {enemy_damage} damage!")
 
-    # Player dead
+            print(
+                f"{enemy.name} dealt {enemy_damage} damage!"
+            )
+
     if player.health <= 0:
+        player.health = 0
         print("\nYou were defeated...")
         return False
 
-    # Player victory
-    print(f"You defeated {enemy.name}!")
+    print(f"\nYou defeated {enemy.name}!")
+
     player.xp += enemy.xp
     player.gold += enemy.gold
+
     print(f"You received {enemy.gold} gold and {enemy.xp} XP.")
+
     check_level_up(player)
     return True
+
 
 
 def healing(player: Player) -> bool:

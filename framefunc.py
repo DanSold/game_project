@@ -62,6 +62,11 @@ def mission_complete(player: Player, mission_name: str):
 
     print(f"Quest === {mission_name} === completed")
 
+def mission_append(player: Player, mission_name: str):
+    if mission_name not in player.quests:
+        player.quests.append(mission_name)
+        print("You got a new quest!")
+        print(f"=== {mission_name} ===")
 
 def pause():
     input("Press ENTER to continue...")

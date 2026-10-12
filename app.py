@@ -1,12 +1,10 @@
-import time
-
 from framefunc import load_game_by_name, save_game
 from func import *
 
 from units_lib import Player
 
-from locations import village, bandit_camp, forest, lake, old_ruins
-
+from locations import village, bandit_camp, forest, lake, old_ruins, bridge, dragon_slayers_guild, temple_of_fire, \
+    dead_forest, bear_cave, northern_pass, dragon_lair, sorcerer_tower
 
 
 def main():
@@ -41,11 +39,19 @@ def main():
         print("2. Bandit Camp")
         print("3. Forest")
         print("4. Lake")
-        print("5. Old Ruins")
-        print("6. Check your parameters and stats")
-        print("7. Check your inventory")
-        print("8. Chek quests")
-        print("0. Quit game")
+        print("5. Bridge")
+        print("6. Dragon Slayers' Guild")
+        print("7. Old Ruins")
+        print("8. Dead Forest")
+        print("9. Temple of Fire")
+        print("10. Bear Cave")
+        print("11. Northern Mountain Pass")
+        print("12. Dragon's Lair")
+        print("13. Sorcerer's Tower")
+        print("14. Check your parameters and stats")
+        print("15. Check your inventory")
+        print("16. Chek quests")
+        print("17. Quit game")
         print("+. Save game")
 
         choice = input("Choose destination: ")
@@ -63,20 +69,45 @@ def main():
             lake(player)
 
         elif choice == "5":
-            old_ruins(player)
+            bridge(player)
 
         elif choice == "6":
-            chek_param(player)
+            dragon_slayers_guild(player)
 
         elif choice == "7":
-            chek_inventory(player)
+            old_ruins(player)
 
         elif choice == "8":
+            dead_forest(player)
+
+        elif choice == "9":
+            temple_of_fire(player)
+
+        elif choice == "10":
+            bear_cave(player)
+
+        elif choice == "11":
+            northern_pass(player)
+
+        elif choice == "12":
+            dragon_lair(player)
+
+        elif choice == "13":
+            sorcerer_tower(player)
+
+        elif choice == "14":
+            chek_param(player)
+
+        elif choice == "15":
+            chek_inventory(player)
+
+        elif choice == "16":
             chek_quests(player)
 
-        elif choice == "0":
+        elif choice == "17":
             print("Thank you for playing The Last Flame!")
             break
+
         elif choice == "+":
             save_game(player)
 

@@ -5,9 +5,9 @@ class Player:
         self.max_health = 100
         self.damage = 20
         self.defense = 5
-        self.level = 1
+        self.level = 10
         self.xp = 0
-        self.gold = 1
+        self.gold = 10000
         self.reputation = 0
         self.inventory = []         # inventory = [small_potion, leather_armor, ...] -> list(Item)
         self.equipped_weapon = None   # equipped_weapon = steel_sword -> class Item(Weapon)
@@ -67,22 +67,30 @@ small_potion = Potion("Small Potion", 10, 5)
 mid_potion = Potion("Medium Potion", 25, 12)
 large_potion = Potion("Large Potion", 50, 25)
 
-copper_sword = Weapon("Copper Sword", damage_bonus=5, cost=30, level=1, coef_up=1.2)
-steel_sword = Weapon("Steel Sword", damage_bonus=10, cost=50, level=1, coef_up=1.4)
+copper_sword = Weapon("Copper Sword", damage_bonus=5, cost=40, level=1, coef_up=1.2)
+steel_sword = Weapon("Steel Sword", damage_bonus=10, cost=70, level=1, coef_up=1.3)
+moon_sword = Weapon("Moon Sword", damage_bonus=20, cost=150, level=1, coef_up=1.4)
 
-leather_armor = Armor("Leather Armor", defense_bonus=2, cost=30, level=1, coef_up=1.3)
-ring_mail = Armor("Ring-mail Armor", defense_bonus=3, cost=35, level=1, coef_up=1.5)
-steel_armor = Armor("Steel Armor", defense_bonus=4, cost=45, level=1, coef_up=1.4)
+leather_armor = Armor("Leather Armor", defense_bonus=2, cost=40, level=1, coef_up=1.3)
+ring_mail = Armor("Ring-mail Armor", defense_bonus=3, cost=45, level=1, coef_up=1.5)
+steel_armor = Armor("Steel Armor", defense_bonus=4, cost=50, level=1, coef_up=1.4)
+sun_armor = Armor("Sun Armor", defense_bonus=6, cost=85, level=1, coef_up=1.6)
 
 rod = Item(name="Rod", cost=10, item_type="instrument")
 fish = Item(name="Fish", cost=7, item_type="fish")
 poison = Item("Poison", 1, "poison")
 goods = QuestItem("Goods", 30, 15)
 
-shop_inventory = [small_potion, mid_potion, large_potion, copper_sword, steel_sword, leather_armor, ring_mail,
-                  steel_armor, poison, rod]
+shop_inventory = [small_potion, mid_potion, large_potion, copper_sword, steel_sword, moon_sword, leather_armor, ring_mail,
+                  steel_armor, sun_armor, poison, rod]
 
-bandit = Enemy("Bandit", 60, 15, 2, 20, 15)
-group_bandits = Enemy("Group of Bandits", 110, 20, 1, 60, 45)
-knight = Enemy("Knight", 100, 18, 4, 40, 30)
-werewolf = Enemy("Werewolf", 110, 25, 3, 45, 35)
+bandit = Enemy("Bandit", 60, 15, 2, 30, 25)
+group_bandits = Enemy("Group of Bandits", 110, 20, 1, 70, 70)
+werewolf = Enemy("Werewolf", 200, 30, 1, 100, 70)
+knight = Enemy("Knight", 220, 40, 5, 150, 120)
+fire_guardian = Enemy("Fire Guardian", 300, 90, 7, 150, 150)
+bear_spirit = Enemy("Corrupted Bear Spirit", 200, 60, 6, 170, 120)
+guardian_squad = Enemy("Guardian Squad", 250, 60, 7, 150, 100)
+ice_golem = Enemy("Ice Golem", 500, 85, 10, 200, 200)
+dragon = Enemy("The Last Dragon", 2000, 110, 20, 300, 1000)
+morvain = Enemy("Morvain the Dark Sorcerer", 1500, 150, 10, 350, 1000)

@@ -3,3 +3,11 @@ from .bandit_camp_file import bandit_camp
 from .forest_file import forest
 from .lake_file import lake
 from .old_ruins_file import old_ruins
+from .bridge_file import bridge
+from .dragon_slayers_guild_file import dragon_slayers_guild
+from .temple_of_fire_file import temple_of_fire
+from .dead_forest_file import dead_forest
+from .bear_cave_file import bear_cave
+from .northern_pass_file import northern_pass
+from .dragon_lair_file import dragon_lair
+from .sorcerer_tower_file import sorcerer_tower
