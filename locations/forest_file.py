@@ -9,15 +9,17 @@ def forest(player: Player):
     def give_eye_of_truth():
         if "Eye of Truth" not in player.artifacts:
             player.artifacts.append("Eye of Truth")
-            player.quests_items.remove("Orb of Wishes")
-
             print("+ Eye of Truth")
             print("The shaman gave you the Eye of Truth.")
             time.sleep(3)
 
+        if "Orb of Wishes" in player.quests_items:
+            player.quests_items.remove("Orb of Wishes")
+
+        if "One Wish" in player.quests:
             mission_complete(player, "One Wish")
 
-            pause()
+        pause()
 
     def steal_eye_of_truth():
         if "Eye of Truth" not in player.artifacts:
