@@ -631,18 +631,22 @@ def upgrade_gear(player: Player, gear):
     gear.level += 1
 
     if gear.item_type == "weapon":
+        old_bonus = gear.damage_bonus
         gear.damage_bonus = round(gear.damage_bonus * gear.coef_up)
+        bonus_diff = gear.damage_bonus - old_bonus
 
         if player.equipped_weapon == gear:
-            player.damage += gear.damage_bonus
+            player.damage += bonus_diff
 
         print(f"{gear.name} upgraded to Level {gear.level}! Damage bonus: +{gear.damage_bonus}")
 
     elif gear.item_type == "armor":
+        old_bonus = gear.defense_bonus
         gear.defense_bonus = round(gear.defense_bonus * gear.coef_up)
+        bonus_diff = gear.defense_bonus - old_bonus
 
         if player.equipped_armor == gear:
-            player.defense += gear.defense_bonus
+            player.defense += bonus_diff
 
         print(f"{gear.name} upgraded to Level {gear.level}! Defense bonus: +{gear.defense_bonus}")
 

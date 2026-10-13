@@ -5,48 +5,58 @@ from framefunc import pause, mission_append, mission_complete
 from func import battle
 
 
-
-
 def dragon_lair(player: Player):
-    while True:
 
-        if "Frozen Secrets" in player.completed_quests:
-            print("=" * 45)
-            print("DRAGON'S LAIR")
-            print("=" * 45)
-            print("***The ambient heat is suffocating. Flames flicker along the ancient cavern walls.***")
-            time.sleep(2.5)
+    if "Frozen Secrets" not in player.completed_quests:
+        print("***This is still too far away for you***")
+        pause()
+        return
 
-            if "Dragon Slayer" in player.completed_quests or "True Hero" in player.completed_quests:
-                print("0. Leave the Lair")
-                print("***The fate of the dragon and Morvain has already been decided***")
-                choice = input("Choose: ")
-                if choice == "0":
-                    return
+    print("=" * 45)
+    print("DRAGON'S LAIR")
+    print("=" * 45)
+    print("***The ambient heat is suffocating. Flames flicker along the ancient cavern walls.***")
+    time.sleep(2.5)
+
+    if "Dragon Slayer" in player.completed_quests or "True Hero" in player.completed_quests:
+        while True:
+            print("0. Leave the Lair")
+            print("***The fate of the dragon and Morvain has already been decided***")
+            choice = input("Choose: ")
+            if choice == "0":
+                return
             else:
-                mission_append(player, "The Final Confrontation")
-                time.sleep(2)
-                print("0. Leave the Lair")
-                print("1. Approach the Last Dragon")
+                print("Invalid choice.")
+    else:
+        mission_append(player, "The Final Confrontation")
+        time.sleep(2)
 
-                choice = input("Choose: ")
+        # Цикл для головного вибору в лігвищі
+        while True:
+            print("0. Leave the Lair")
+            print("1. Approach the Last Dragon")
 
-                if choice == "0":
-                    return
+            choice = input("Choose: ")
 
-                elif choice == "1":
-                    print("\n*** A giant crimson dragon lands before you, its glowing eyes locking onto yours. ***")
+            if choice == "0":
+                return
+
+            elif choice == "1":
+                print("\n*** A giant crimson dragon lands before you, its glowing eyes locking onto yours. ***")
+                time.sleep(3)
+
+                trigger_battle = False
+
+                if player.reputation >= 30:
+                    print(
+                        "Dragon: 'Human... I see you've found all 5 artifacts. You know the truth.'")
+                    time.sleep(3)
+                    print(
+                        "Dragon: 'Morvain manipulated us all to claim absolute power. Will you fight me, or face the true villain?'")
                     time.sleep(3)
 
 
-                    if player.reputation >= 30:
-                        print(
-                            "Dragon: 'Human... I see you've found all 5 artifacts. You know the truth.'")
-                        time.sleep(3)
-                        print(
-                            "Dragon: 'Morvain manipulated us all to claim absolute power. Will you fight me, or face the true villain?'")
-                        time.sleep(3)
-
+                    while True:
                         print("\nWhat will you do?")
                         print("1. Speak with the Dragon")
                         print("2. Attack the Dragon regardless")
@@ -66,44 +76,57 @@ def dragon_lair(player: Player):
                                 "\n***The pathway to the Sorcerer's Tower is now unlocked in your main map!***")
                             pause()
                             return
+                        elif rep_choice == "2":
+                            trigger_battle = True
+                            break
+                        else:
+                            print("Invalid choice.")
+                else:
+                    print("\nDragon: 'Foolish mortal! You lack the standing to parley with me. Prepare to burn!'")
+                    time.sleep(2.5)
+                    trigger_battle = True
+
+                # Логіка бою та кінцівок
+                if trigger_battle:
                     print("\n***The Dragon roars as the battle begins!***")
                     time.sleep(2.5)
                     victory = battle(dragon, player)
+
                     if victory:
                         print("\n***The mighty dragon falls with a deafening crash...***")
                         time.sleep(3)
-                        print("\nWhat will you do with the Dragon's Power?")
-                        print("1. Claim the power for yourself")
-                        print("2. Surrender the power to Morvain")
 
-                        end_choice = input("Choose your destiny: ")
+                        # Цикл для вибору кінцівки після перемоги
+                        while True:
+                            print("\nWhat will you do with the Dragon's Power?")
+                            print("1. Claim the power for yourself")
+                            print("2. Surrender the power to Morvain")
 
-                        if end_choice == "1":
-                            print(f"***{player.name} absorbs the essence of the Last Dragon***")
-                            time.sleep(3)
-                            print("You become the supreme ruler of Eldoria, feared by all.")
-                            print("=== NEUTRAL ENDING: THE NEW OVERLORD ===")
-                            mission_complete(player, "The Final Confrontation")
-                            pause()
-                            return
+                            end_choice = input("Choose your destiny: ")
 
-                        elif end_choice == "2":
-                            print(f"\n*** {player.name} hands the dragon's soul to Morvain. ***")
-                            time.sleep(3)
-                            print("Morvain laughs maniacally as darkness consumes the realm.")
-                            print("=== BAD ENDING: MORVAIN'S TRIUMPH ===")
-                            mission_complete(player, "The Final Confrontation")
-                            pause()
-                            return
-                        else:
-                            print("Invalid choice.")
+                            if end_choice == "1":
+                                print(f"***{player.name} absorbs the essence of the Last Dragon***")
+                                time.sleep(3)
+                                print("You become the supreme ruler of Eldoria, feared by all.")
+                                print("=== NEUTRAL ENDING: THE NEW OVERLORD ===")
+                                mission_complete(player, "The Final Confrontation")
+                                pause()
+                                return
+
+                            elif end_choice == "2":
+                                print(f"\n*** {player.name} hands the dragon's soul to Morvain. ***")
+                                time.sleep(3)
+                                print("Morvain laughs maniacally as darkness consumes the realm.")
+                                print("=== BAD ENDING: MORVAIN'S TRIUMPH ===")
+                                mission_complete(player, "The Final Confrontation")
+                                pause()
+                                return
+                            else:
+                                print("Invalid choice.")
                     else:
                         print("The dragon's fire forced you to retreat...")
                         pause()
                         return
-                else:
-                    print("Invalid choice.")
-        else:
-            print("***This is still too far away for you***")
-            pause()
-            return
+                break
+            else:
+                print("Invalid choice.")
