@@ -1,4 +1,5 @@
 from random import randint, random
+from copy import deepcopy
 from units_lib import *
 
 from framefunc import pause
@@ -84,8 +85,12 @@ def battle(enemy: Enemy, player: Player):
                 continue
 
         elif choice == "3":
-            healing(player)
-            continue
+            healed = healing(player)
+
+            # A successful heal uses the player's turn; the enemy can attack.
+            # If healing was cancelled or unavailable, do not consume the turn.
+            if not healed:
+                continue
 
         else:
             print("Invalid choice. Please pick 1, 2, or 3.")
@@ -374,7 +379,7 @@ def open_shop(player: Player):
                             print("\nYou don't have enough gold!")
                         else:
                             player.gold -= selected_item.cost
-                            player.inventory.append(selected_item)
+                            player.inventory.append(deepcopy(selected_item))
                             print(
                                 f"\nYou bought {selected_item.name} for {selected_item.cost}"
                                 " gold!"
