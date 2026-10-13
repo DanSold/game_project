@@ -85,12 +85,8 @@ def battle(enemy: Enemy, player: Player):
                 continue
 
         elif choice == "3":
-            healed = healing(player)
-
-            # A successful heal uses the player's turn; the enemy can attack.
-            # If healing was cancelled or unavailable, do not consume the turn.
-            if not healed:
-                continue
+            healing(player)
+            continue
 
         else:
             print("Invalid choice. Please pick 1, 2, or 3.")
