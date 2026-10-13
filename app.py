@@ -16,27 +16,32 @@ def main():
 
     print("1. New game")
     print("2. Load saved game")
-    start_choice = input("Choose option: ")
+    start_choice = input("Choose option: ").strip()
 
     if start_choice == "1":
         print("Now the dragon is awakening.")
         print("Five ancient artifacts are the only things that can stop what is coming.")
 
-        name = input("Enter your name: ")
+        name = input("Enter your name: ").strip()
 
         if not name:
             print("Name cannot be empty.")
+            return
 
-    if start_choice == "2":
-        player = load_game_by_name()
-    if player is None:
-        print("Now the dragon is awakening.")
-        print("Five ancient artifacts are the only things that can stop what is coming.")
-
-        name = input("Enter your name: ")
         player = Player(name)
         print(f"Welcome, {player.name}!")
         time.sleep(2)
+
+    elif start_choice == "2":
+        player = load_game_by_name()
+
+        if player is None:
+            print("Loading cancelled. Exiting game.")
+            return
+
+    else:
+        print("Invalid choice. Exiting game.")
+        return
 
     while player.health > 0:
 
