@@ -5,9 +5,9 @@ class Player:
         self.max_health = 100
         self.damage = 20
         self.defense = 5
-        self.level = 10
+        self.level = 1
         self.xp = 0
-        self.gold = 10000
+        self.gold = 10
         self.reputation = 0
         self.inventory = []         # inventory = [small_potion, leather_armor, ...] -> list(Item)
         self.equipped_weapon = None   # equipped_weapon = steel_sword -> class Item(Weapon)
