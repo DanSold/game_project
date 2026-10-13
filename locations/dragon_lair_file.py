@@ -18,7 +18,11 @@ def dragon_lair(player: Player):
     print("***The ambient heat is suffocating. Flames flicker along the ancient cavern walls.***")
     time.sleep(2.5)
 
-    if "Dragon Slayer" in player.completed_quests or "True Hero" in player.completed_quests:
+    if (
+            "The Final Confrontation" in player.completed_quests
+            or "Dragon Slayer" in player.completed_quests
+            or "True Hero" in player.completed_quests
+    ):
         while True:
             print("0. Leave the Lair")
             print("***The fate of the dragon and Morvain has already been decided***")
@@ -31,7 +35,7 @@ def dragon_lair(player: Player):
         mission_append(player, "The Final Confrontation")
         time.sleep(2)
 
-        # Цикл для головного вибору в лігвищі
+
         while True:
             print("0. Leave the Lair")
             print("1. Approach the Last Dragon")
@@ -86,7 +90,7 @@ def dragon_lair(player: Player):
                     time.sleep(2.5)
                     trigger_battle = True
 
-                # Логіка бою та кінцівок
+
                 if trigger_battle:
                     print("\n***The Dragon roars as the battle begins!***")
                     time.sleep(2.5)
@@ -96,7 +100,7 @@ def dragon_lair(player: Player):
                         print("\n***The mighty dragon falls with a deafening crash...***")
                         time.sleep(3)
 
-                        # Цикл для вибору кінцівки після перемоги
+
                         while True:
                             print("\nWhat will you do with the Dragon's Power?")
                             print("1. Claim the power for yourself")

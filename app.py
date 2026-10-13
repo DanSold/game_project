@@ -18,6 +18,15 @@ def main():
     print("2. Load saved game")
     start_choice = input("Choose option: ")
 
+    if start_choice == "1":
+        print("Now the dragon is awakening.")
+        print("Five ancient artifacts are the only things that can stop what is coming.")
+
+        name = input("Enter your name: ")
+
+        if not name:
+            print("Name cannot be empty.")
+
     if start_choice == "2":
         player = load_game_by_name()
     if player is None:

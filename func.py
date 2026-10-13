@@ -451,11 +451,11 @@ def open_shop(player: Player):
 
 
 def check_level_up(player: Player):
-    xp_needed = player.level * 50
+    while player.xp >= player.level * 50:
+        xp_needed = player.level * 50
 
-    if player.xp >= xp_needed:
-        player.level += 1
         player.xp -= xp_needed
+        player.level += 1
 
         player.max_health += 10
         player.health = player.max_health
@@ -464,10 +464,14 @@ def check_level_up(player: Player):
 
         print("*" * 45)
         print(f"LEVEL UP! You reached Level {player.level}!")
-        print(f"Max HP increased to {player.max_health} (Fully Restored!)")
+        print(
+            f"Max HP increased to {player.max_health} "
+            f"(Fully Restored!)"
+        )
         print(f"Damage increased to {player.damage}")
         print(f"Defense increased to {player.defense}")
         print("*" * 45)
+
 
 
 def chek_param(player: Player):

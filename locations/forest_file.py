@@ -152,6 +152,9 @@ def forest(player: Player):
             elif choice == "1":
                 enter_hut(first_visit=True)
 
+                if player.health <= 0:
+                    return
+
             else:
                 print("Invalid choice.")
 
