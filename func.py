@@ -424,6 +424,13 @@ def open_shop(player: Player):
                     item_idx = int(choice) - 1
 
                     if 0 <= item_idx < len(player.inventory):
+                        selected_item = player.inventory[item_idx]
+
+                        # Quest items must stay in the inventory until their quest is resolved.
+                        if selected_item.item_type == "quest item":
+                            print("\nQuest items cannot be sold.")
+                            continue
+
                         sold_item = player.inventory.pop(item_idx)
                         if sold_item.item_type == "weapon" or sold_item.item_type == "armor":
                             sell_price = sold_item.cost + ((sold_item.level - 1) * sold_item.upgrade_cost)
