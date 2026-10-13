@@ -16,6 +16,7 @@ class Player:
         self.quests = []            # quests = ["Old Stories", ...] -> list(str)
         self.completed_quests = []  # completed_quests = ["Gold, gold, gold...", ...] -> list(str)
         self.quests_items = []      # quests_items = ["Cart", ...] -> list(str)
+        self.unlocked_locations = ["Village"]  # Story locations unlocked permanently
 
 
 class Enemy:
